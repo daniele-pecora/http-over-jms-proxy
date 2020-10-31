@@ -1,0 +1,68 @@
+@startuml
+!include <tupadr3/common>
+
+!include <office/Servers/database_server>
+!include <office/Servers/application_server>
+!include <office/Concepts/firewall_orange>
+!include <office/Clouds/cloud_disaster_red>
+
+
+!include <tupadr3/font-awesome/server>
+
+
+!define ICONURL https://raw.githubusercontent.com/Roemer/plantuml-office/master/office2014
+!includeurl ICONURL/Concepts/globe_internet.puml
+!includeurl ICONURL/Communications/public_im_cloud_service.puml
+!includeurl ICONURL/Databases/database.puml
+
+!includeurl ICONURL/Services/online_hosted_services.puml
+!includeurl ICONURL/Services/federation_service.puml
+
+skinparam ArrowThickness 4
+skinparam roundcorner 20
+skinparam BoxPadding 10
+
+title The Solution HTTP over JMS
+
+ cloud "Internet browser" <<$globe_internet>> as internet #white {
+
+ }
+
+ rectangle Internethost{
+    FA_SERVER(webserver,Webserver) #Turquoise
+    OFF_ONLINE_HOSTED_SERVICES(jmsproxyprod, "JMS producer\nHTTP Proxy")
+    OFF_FEDERATION_SERVICE(jmsbroker, "JMS broker")
+    webserver <-d-> jmsproxyprod
+    jmsproxyprod <-> jmsbroker
+    OFF_DATABASE(webdb, Database)
+    jmsbroker <-> webdb
+ }
+
+ rectangle "\nDMZ" <<$warn>>  as dmz #yellow {
+    OFF_FIREWALL_ORANGE(fw,<color:white>Firewall</color>) #Yellow/Red
+    OFF_ONLINE_HOSTED_SERVICES(jmsproxyconsumer, "JMS consumer\nHTTP Proxy")
+    OFF_APPLICATION_SERVER(app,<color:white>Application-server</color>) #Magenta
+
+    jmsbroker <--d- dmz
+    dmz <.d. fw
+
+    note on link
+        <$warn>
+        DMZ requires highest security standards
+        so **no open incoming port** is required here.
+
+        **Re-writing existing software no required here**
+        because the JSM producer and consumer do work transparently
+        by converting HTTP request and responses to JMS messages
+        and vice-versa.
+    end note
+    jmsproxyconsumer <.d.> app
+    fw <.d. jmsproxyconsumer
+ }
+ OFF_DATABASE_SERVER(db,Database) #MediumSpringGreen
+ app <.> db
+
+ internet <--d-> webserver
+
+
+@enduml

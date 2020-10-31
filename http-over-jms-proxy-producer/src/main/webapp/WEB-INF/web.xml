@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <listener>
+        <listener-class>de.superfusion.transport.jms.JMSWebappStartListener</listener-class>
+    </listener>
+    <!-- proxy all http requests -->
+    <servlet>
+        <servlet-name>JMSProxyServerServlet</servlet-name>
+        <servlet-class>de.superfusion.transport.jms.JMSProxyServerServlet</servlet-class>
+        <init-param>
+            <param-name>targetUri</param-name>
+            <param-value>https://angular.io</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ignoreSSLCerts</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>preserveCookiePath</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>preserveCookies</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>log</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JMSProxyServerServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+</web-app>

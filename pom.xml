@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.superfusion.transport</groupId>
+    <artifactId>http-over-jms-proxy-project</artifactId>
+    <name>HTTP over JMS Proxy Project</name>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <properties>
+        <author>Daniele Pecora</author>
+        <authorId>daniele.pecora</authorId>
+        <authorEmail>daniele.pecora@googlemail.com</authorEmail>
+        <distribution-package>HTTP-over-JMS-Proxy.zip</distribution-package>
+    </properties>
+    <modules>
+        <module>http-over-jms-proxy-core</module>
+        <module>http-over-jms-proxy-producer</module>
+        <module>http-over-jms-proxy-consumer</module>
+        <!-- must build last -->
+        <module>http-over-jms-proxy-resources</module>
+    </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <!-- make sure 'dist' directory exists before running any build -->
+                        <configuration>
+                            <tasks>
+                                <mkdir dir="dist"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

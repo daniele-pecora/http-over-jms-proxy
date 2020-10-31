@@ -1,0 +1,61 @@
+@startuml
+!include <tupadr3/common>
+
+!include <office/Servers/database_server>
+!include <office/Servers/application_server>
+!include <office/Concepts/firewall_orange>
+!include <office/Clouds/cloud_disaster_red>
+
+
+!include <tupadr3/font-awesome/server>
+
+
+!define ICONURL https://raw.githubusercontent.com/Roemer/plantuml-office/master/office2014
+!includeurl ICONURL/Concepts/globe_internet.puml
+!includeurl ICONURL/Communications/public_im_cloud_service.puml
+!includeurl ICONURL/Databases/database.puml
+
+skinparam ArrowThickness 4
+skinparam roundcorner 20
+skinparam BoxPadding 10
+
+title Common solution
+
+ cloud "Internet browser" <<$globe_internet>> as internet #white {
+
+ }
+
+ rectangle Internethost{
+    FA_SERVER(webserver,Webserver) #Turquoise
+    OFF_PUBLIC_IM_CLOUD_SERVICE(webservice, Webservice)
+    webserver <-d-> webservice
+    OFF_DATABASE(webdb, Database)
+    webservice <-> webdb
+ }
+
+ rectangle "\nDMZ" <<$warn>>  as dmz #yellow {
+    OFF_FIREWALL_ORANGE(fw,<color:white>Firewall</color>) #Yellow/Red
+    OFF_PUBLIC_IM_CLOUD_SERVICE(webservice2, Webservice)
+    OFF_APPLICATION_SERVER(app,<color:white>Application-server</color>) #Magenta
+
+    webdb <--d- dmz
+    dmz <.d. fw
+
+    note on link
+        <$warn>
+        DMZ requires highest security standards
+        so **no open incoming port** is required here.
+
+        **Requires re-writing existing software**
+        to make use of the webservices
+    end note
+    webservice2 <.d.> app
+    fw <.d. webservice2
+ }
+ OFF_DATABASE_SERVER(db,Database) #MediumSpringGreen
+ app <.> db
+
+ internet <--d-> webserver
+
+
+@enduml

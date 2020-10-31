@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="${project.name}" basedir=".." default="copy-to-target">
+
+    <basename property="project.name" file="/"/>
+
+    <property name="dist" value="${basedir}/../dist"/>
+
+    <xmlproperty file="../pom.xml" prefix="pom" />
+    <property name="distPackage" value="${pom.project.properties.distribution-package}"/>
+    <property name="distPackagePath" value="${basedir}/../${distPackage}"/>
+
+    <target name="clean">
+        <!-- don't clear the dist folder itself, because war archives have been deployed there in -->
+        <delete failonerror="false" dir="${dist}/instances"/>
+        <delete failonerror="false" dir="${distPackagePath}"/>
+    </target>
+
+    <target name="testdir-dist">
+        <available file="${dist}" property="dist.exists" value="true"/>
+    </target>
+
+    <target name="makedir-dist" depends="testdir-dist" unless="dist.exists">
+        <mkdir dir="${dist}"/>
+    </target>
+
+
+    <target name="create-dist" depends="clean, makedir-dist"
+            description="Copies the resources templates to ...">
+        <echo>Copy resources templates</echo>
+
+        <copy preservelastmodified="false" overwrite="true" verbose="true" todir="${dist}/HTTP2JMS_CONF"
+              includeemptydirs="true">
+            <fileset dir="${basedir}/HTTP2JMS_CONF"/>
+        </copy>
+
+        <!-- Transform to ROOT.xml so -->
+        <move file="${dist}/HTTP2JMS_CONF/jms-proxy/producer/conf/Catalina/localhost/http-over-jms-proxy-producer.xml"
+              tofile="${dist}/HTTP2JMS_CONF/jms-proxy/producer/conf/Catalina/localhost/ROOT.xml"/>
+
+
+        <!--<copy preservelastmodified="false" overwrite="true" verbose="true" todir="${dist}" includeemptydirs="true">-->
+        <!--<file file="README.MD"/>-->
+        <!--</copy>-->
+
+
+        <copy preservelastmodified="false" overwrite="true" verbose="true" todir="${dist}/instances"
+              includeemptydirs="true">
+            <fileset dir="${basedir}/instances"/>
+        </copy>
+
+        <!-- prepare and build instances -->
+        <property id="tomcat_consumer" name="tomcat_consumer" value="${dist}/instances/dmz/apache-tomcat-8.0.53-consumer"/>
+        <property id="tomcat_producer" name="tomcat_producer" value="${dist}/instances/internet/apache-tomcat-8.0.53-producer"/>
+
+        <move file="${dist}/HTTP2JMS_CONF/jms-proxy/consumer/conf/Catalina"
+              todir="${tomcat_consumer}/conf" overwrite="true"/>
+        <move file="${dist}/HTTP2JMS_CONF/jms-proxy/consumer/conf/server.xml"
+              tofile="${tomcat_consumer}/conf/server.xml" overwrite="true"/>
+
+        <move file="${dist}/HTTP2JMS_CONF/jms-proxy/producer/conf/Catalina"
+              todir="${tomcat_producer}/conf" overwrite="true"/>
+        <move file="${dist}/HTTP2JMS_CONF/jms-proxy/producer/conf/server.xml"
+              tofile="${tomcat_producer}/conf/server.xml" overwrite="true"/>
+
+
+        <delete failonerror="false" dir="${tomcat_consumer}/webapps"/>
+        <delete failonerror="false" dir="${tomcat_producer}/webapps"/>
+
+        <!-- create folder that may have not been pushed into repo and may be missing -->
+        <mkdir dir="${tomcat_consumer}/html2jms-webapps"/>
+        <mkdir dir="${tomcat_producer}/html2jms-webapps"/>
+        <mkdir dir="${tomcat_consumer}/logs"/>
+        <mkdir dir="${tomcat_producer}/logs"/>
+        <mkdir dir="${tomcat_consumer}/work"/>
+        <mkdir dir="${tomcat_producer}/work"/>
+
+        <mkdir dir="${dist}/instances/internet/HTTP2JMS_CONF/jms-proxy/producer"/>
+        <move file="${dist}/HTTP2JMS_CONF/jms-proxy/producer"
+              todir="${dist}/instances/internet/HTTP2JMS_CONF/jms-proxy/" overwrite="true"/>
+        <copy file="${dist}/HTTP2JMS_CONF/jms-proxy/jms-proxy.properties" tofile="${dist}/instances/internet/HTTP2JMS_CONF/jms-proxy/jms-proxy.properties"/>
+        <copy file="${dist}/HTTP2JMS_CONF/jms-proxy/tomcat.jks" tofile="${dist}/instances/internet/HTTP2JMS_CONF/jms-proxy/tomcat.jks"/>
+        <delete failonerror="false" dir="${dist}/instances/internet/HTTP2JMS_CONF/jms-proxy/producer/conf"/>
+
+        <mkdir dir="${dist}/instances/dmz/HTTP2JMS_CONF/jms-proxy/consumer"/>
+        <move file="${dist}/HTTP2JMS_CONF/jms-proxy/consumer"
+              todir="${dist}/instances/dmz/HTTP2JMS_CONF/jms-proxy/" overwrite="true"/>
+        <copy file="${dist}/HTTP2JMS_CONF/jms-proxy/jms-proxy.properties" tofile="${dist}/instances/dmz/HTTP2JMS_CONF/jms-proxy/jms-proxy.properties"/>
+        <copy file="${dist}/HTTP2JMS_CONF/jms-proxy/tomcat.jks" tofile="${dist}/instances/dmz/HTTP2JMS_CONF/jms-proxy/tomcat.jks"/>
+        <delete failonerror="false" dir="${dist}/instances/dmz/HTTP2JMS_CONF/jms-proxy/consumer/conf"/>
+
+        <delete failonerror="false" dir="${dist}/HTTP2JMS_CONF"/>
+
+
+        <echo>*************************************************************</echo>
+        <echo>Creating distribution package</echo>
+        <echo>-------------------------------------------------------------</echo>
+        <!-- read parent pom distribution package name -->
+
+        <zip destfile="${distPackagePath}"
+             basedir="${dist}/instances"
+             excludes="*.svn, *.git"
+        />
+        <echo>*************************************************************</echo>
+
+    </target>
+</project>

@@ -1,0 +1,254 @@
+<table class="data-table">
+    <tr>
+        <th class="border-bottom">Property</th>
+        <th class="border-bottom">Value - Type</th>
+        <th class="border-bottom">Default-Value</th>
+        <th class="border-bottom">Description</th>
+    </tr>
+    <tr>
+        <td>GLOBAL</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>de.superfusion.jms.DELIVERY_MODE</td>
+        <td>NOT_PERSISTENT , PERSISTENT</td>
+        <td>NOT_PERSISTENT</td>
+        <td>The persistence mode for the message handled by the broker</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.jms.REQUEST_MESSAGE_QUEUE_NAME</td>
+        <td>String</td>
+        <td>HTTP2JMS_TEST_QUEUE</td>
+        <td>The name of the message queue</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.jms.BROKER_DESTINATION</td>
+        <td>protocol://host:port , host:port</td>
+        <td>localhost:61616</td>
+        <td>The address of the broker.<br/>You may not set the protocol then tcp:// will be set as default.</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.jms.CONSUMER_IS_PROXY</td>
+        <td>boolean (true, false)</td>
+        <td>false</td>
+        <td>This tells the producer not to modify the http request in any way.<br/>This tells the consumer to modify all http requests.<br/>(experimental)</td>
+    </tr>
+    <tr>
+        <td>PRODUCER</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.PROXY.targetUri</td>
+        <td>Absolute URL</td>
+        <td>https://angular.io</td>
+        <td>Tells the proxy where to get the original content for all requests.</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>CONSUMER</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>de.superfusion.jms.TARGET_URI</td>
+        <td>Absolute URL</td>
+        <td>https://angular.io</td>
+        <td>If de.superfusion.jms.CONSUMER_IS_PROXY = true then it tells the proxy where to get the original content for all requests.<br/><br/>If de.superfusion.jms.CONSUMER_IS_PROXY = false then it&nbsp;tells the consumer to tie all requests to this host.<br/>If the host doesn't match, the request will be rejected (HTTP 400).</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.jms.TARGET_URI.doPreserveHost</td>
+        <td>boolean (true,&nbsp;false)</td>
+        <td>false</td>
+        <td>Don't change http host header.</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.jms.TARGET_URI.doPreserveCookies</td>
+        <td>boolean (true,&nbsp;false)</td>
+        <td>false</td>
+        <td>Don't proxy cookies.<br/>When true all cookies will be handled by the proxy.</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.jms.TARGET_URI.preserveCookiePath</td>
+        <td>boolean (true,&nbsp;false)</td>
+        <td>true</td>
+        <td>Don't modify the path set in cookie.</td>
+    </tr>
+    <tr>
+        <td class="border-bottom">de.superfusion.jms.TARGET_URI.rewrite_servletPath</td>
+        <td class="border-bottom">String</td>
+        <td class="border-bottom">-</td>
+        <td class="border-bottom">Override servlet path in cookie.</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.jms.TARGET_URI.rewrite_contextPath</td>
+        <td>String&nbsp;</td>
+        <td>-</td>
+        <td>Override context path in cookie.</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.jms.CONSUMER_AMOUNT</td>
+        <td>Integer</td>
+        <td>10</td>
+        <td>Set the amount of consumer that will be registered at startup.<br/>Making any changes in configuration requires re-start of Tomcat.</td>
+    </tr>
+    <tr>
+        <td class="border-bottom">de.superfusion.jms.IGNORE_TARGET_SSL</td>
+        <td class="border-bottom">boolean (true,&nbsp;false)</td>
+        <td class="border-bottom">true</td>
+        <td class="border-bottom">Ignore SSL certificates from destination url in de.superfusion.jms.TARGET_URI or de.superfusion.transport.jms.PROXY.targetUri.<br/>Set if self signer SSL certs should be accepted or not.</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>PROXY</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.PROXY.log</td>
+        <td>boolean (true,&nbsp;false)</td>
+        <td>true</td>
+        <td>Enables some servlet logging.</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.PROXY.preserveCookies</td>
+        <td>boolean (true,&nbsp;false)</td>
+        <td>false</td>
+        <td>Keep COOKIES as-is</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.PROXY.preserveCookiePath</td>
+        <td>boolean (true,&nbsp;false)</td>
+        <td>true</td>
+        <td>Keep the path of COOKIES as-is.</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.PROXY.ignoreSSLCerts</td>
+        <td>boolean (true,&nbsp;false)</td>
+        <td>true</td>
+        <td>Set if self signer SSL certs should be accepted or not.</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.PROXY.forwardip</td>
+        <td>boolean (true,&nbsp;false)</td>
+        <td>true</td>
+        <td>Forwarding of the client IP</td>
+    </tr>
+    <tr>
+        <td>#de.superfusion.transport.jms.PROXY.preserveHost</td>
+        <td>boolean (true,&nbsp;false)</td>
+        <td>false</td>
+        <td>Keep HOST parameter as-is</td>
+    </tr>
+    <tr>
+        <td class="border-bottom">de.superfusion.transport.jms.PROXY.http.protocol.handle-redirects</td>
+        <td class="border-bottom">boolean (true,&nbsp;false)</td>
+        <td class="border-bottom">false</td>
+        <td class="border-bottom">Auto-handle redirects.<br/>When enable no redirect with HTTP 302 will be delivered to the client.</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.PROXY.http.socket.timeout</td>
+        <td>Integer</td>
+        <td>-1</td>
+        <td>Set the socket connection timeout (millis)</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.PROXY.http.read.timeout</td>
+        <td>Integer</td>
+        <td>-1</td>
+        <td>Set the socket read timeout (millis)</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.PROXY.targetUri</td>
+        <td>Absolute URL</td>
+        <td>https://angular.io</td>
+        <td>Tells the proxy where to get the original content for all requests.</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="border-bottom">this settings only when option 'CONSUMER_IS_PROXY=true' is set</td>
+        <td class="border-bottom"></td>
+        <td class="border-bottom"></td>
+        <td class="border-bottom"></td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.PROXY.reduceCookiePathToFirstChild</td>
+        <td>boolean (true,&nbsp;false)</td>
+        <td>false</td>
+        <td>This will reduce all cookie paths to the first path segment.</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.PROXY.sendOnlyPrefixedCookie</td>
+        <td>boolean (true,&nbsp;false)</td>
+        <td>false</td>
+        <td>This will prevent client cookies provided by the proxy to be sent to the target host.</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>LOGGING</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.log</td>
+        <td>boolean (true,&nbsp;false)</td>
+        <td>true</td>
+        <td>Enable requests logging.</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.log.MATCH_REQUEST_URL</td>
+        <td>String,&nbsp;&nbsp;Regex</td>
+        <td>.*</td>
+        <td>Any request that matches with this regex will be logged out.</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.log.MATCH_TARGET_URL.cookieOnly</td>
+        <td>boolean (true,&nbsp;false)</td>
+        <td>true</td>
+        <td>Will not log any request or response but the cookies that will be sent to or receive from target host.</td>
+    </tr>
+    <tr>
+        <td>de.superfusion.transport.jms.log.MATCH_TARGET_URL</td>
+        <td>String,&nbsp;&nbsp;Regex</td>
+        <td>.*</td>
+        <td>unused</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>

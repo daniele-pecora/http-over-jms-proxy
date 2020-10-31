@@ -1,0 +1,41 @@
+# Eclipse
+.classpath
+.project
+.settings/
+**/.classpath
+**/.project
+**/.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+**/*.iml
+**/*.iws
+
+# Mac
+.DS_Store
+**/.DS_Store
+
+# Maven
+log/
+target/
+**/log/
+**/target/
+
+out/
+**/out/
+
+*.lock
+*.yarn-*
+**/*.lock
+**/*.yarn-*
+
+.svn
+**/.svn
+
+
+jms-proxy-instances/
+dist/
+HTTP-over-JMS-Proxy.zip
+
